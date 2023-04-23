@@ -1,0 +1,38 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.8.20'
+    id 'application'
+    id 'org.springframework.boot' version '3.0.5'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.8.20'
+    id 'org.jetbrains.kotlin.plugin.jpa' version '1.8.20'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.0.5")
+    compileOnly("org.projectlombok:lombok:1.18.26")
+
+    runtimeOnly 'com.h2database:h2'
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+}
+
+test {
+    useJUnitPlatform()
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = '1.8'
+}
+
+application {
+    mainClassName = 'MallServiceApplication'
+}
