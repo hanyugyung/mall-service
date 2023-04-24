@@ -1,11 +1,11 @@
 package org.example.domain.partner
 
-import jakarta.persistence.*
+import jakarta.persistence.Entity
+import jakarta.persistence.Table
 import lombok.Builder
 import lombok.Getter
 import lombok.NoArgsConstructor
 import org.example.domain.Base
-import org.example.domain.user.User
 
 @Entity
 @Table(name = "partners")
