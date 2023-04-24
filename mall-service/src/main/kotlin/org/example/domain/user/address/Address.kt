@@ -7,6 +7,7 @@ import org.example.domain.Base
 import org.example.domain.user.User
 
 @Entity
+@Table(name = "addresses")
 @Getter
 @NoArgsConstructor
 class Address() : Base() {

@@ -1,13 +1,18 @@
 package org.example.domain.user
 
-import lombok.RequiredArgsConstructor
+import org.example.infrastructure.user.UserRepository
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
-@RequiredArgsConstructor
-class UserServiceImpl : UserService {
-    override fun signUpUser(dto: UserCommand.SignUpUser) {
-        var user = dto.toEntity() // TODO password 암호화
-        // TODO 영속화
+class UserServiceImpl @Autowired constructor(
+    private val userRepository: UserRepository
+) : UserService {
+
+    @Transactional
+    override fun signUpUser(dto: UserCommand.SignUpUser) : User {
+        val user = dto.toEntity() // TODO password 암호화
+        return userRepository.save(user)
     }
 }
