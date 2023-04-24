@@ -1,0 +1,13 @@
+server:
+  shutdown: graceful
+
+spring:
+  jackson:
+    default-property-inclusion: non_null
+  jpa:
+    open-in-view: false
+    properties:
+      jakarta:
+        persistence:
+          sharedCache:
+            mode: ALL
