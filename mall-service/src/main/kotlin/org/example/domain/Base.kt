@@ -14,12 +14,12 @@ open class Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val id: Long? = null
+    val id: Long? = null
 
     @CreationTimestamp
-    private lateinit var createdAt: ZonedDateTime
+    lateinit var createdAt: ZonedDateTime private set
 
     @UpdateTimestamp
-    private lateinit var updatedAt: ZonedDateTime
+    lateinit var updatedAt: ZonedDateTime private set
 
 }

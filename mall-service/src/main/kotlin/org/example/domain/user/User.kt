@@ -1,15 +1,13 @@
 package org.example.domain.user;
 
-import jakarta.persistence.CascadeType
-import jakarta.persistence.Entity
-import jakarta.persistence.FetchType
-import jakarta.persistence.OneToMany
+import jakarta.persistence.*
 import lombok.Getter
 import lombok.NoArgsConstructor
 import org.example.domain.Base
 import org.example.domain.user.address.Address
 
 @Entity
+@Table(name = "users")
 @Getter
 @NoArgsConstructor
 class User() : Base() {
@@ -17,7 +15,7 @@ class User() : Base() {
     lateinit var userToken: String private set
     lateinit var email: String private set
     lateinit var password: String private set
-    lateinit var role: Role private set
+    @Enumerated(EnumType.STRING) lateinit var role: Role private set
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.PERSIST])
     var addressList: List<Address> = listOf()
@@ -31,5 +29,6 @@ class User() : Base() {
         this.userToken = System.currentTimeMillis().toString()
         this.email = email
         this.password = password
+        this.role = Role.CUSTOMER
     }
 }
