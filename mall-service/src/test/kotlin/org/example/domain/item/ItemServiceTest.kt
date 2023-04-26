@@ -1,9 +1,10 @@
 package org.example.domain.item
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
+import jakarta.persistence.EntityNotFoundException
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
@@ -41,5 +42,13 @@ internal class ItemServiceTest @Autowired constructor(
 
         assertEquals(1, info.size)
         assertEquals(2, info[0].itemOptionDtoList.size)
+    }
+
+    @Test
+    fun 등록_상품_조회_파트너token이_없는_경우_실패() {
+        val partnerToken = "token"
+        assertThrows<EntityNotFoundException> {
+            itemService.getListOfItemsToUser(partnerToken)
+        }
     }
 }

@@ -1,6 +1,7 @@
 package org.example.domain.item
 
 import jakarta.persistence.*
+import lombok.Getter
 import lombok.NoArgsConstructor
 import org.example.domain.Base
 import org.example.domain.item.option.ItemOption
@@ -13,7 +14,14 @@ class Item() : Base() {
     lateinit var itemToken: String private set
     lateinit var name: String private set
     var price: Int = 0
-    var isActive: Boolean = true
+
+    @Enumerated(EnumType.STRING)
+    var status: Status = Status.VISIBLE
+
+    @Getter
+    enum class Status {
+        VISIBLE, INVISIBLE
+    }
 
     var partnerId: Long? = null
 

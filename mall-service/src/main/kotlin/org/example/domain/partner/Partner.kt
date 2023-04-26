@@ -1,6 +1,8 @@
 package org.example.domain.partner
 
 import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.Table
 import lombok.Builder
 import lombok.Getter
@@ -17,7 +19,14 @@ class Partner() : Base() {
     lateinit var password: String private set
     lateinit var bizNo: String private set
     lateinit var brandName: String private set
-    var isActive: Boolean = true
+
+    @Enumerated(EnumType.STRING)
+    var status: Status = Status.ACTIVE
+
+    @Getter
+    enum class Status {
+        ACTIVE, INACTIVE
+    }
 
     @Builder
     constructor(email: String, password: String, bizNo: String, brandName: String) : this() {
