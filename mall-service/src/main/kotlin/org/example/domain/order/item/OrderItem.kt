@@ -1,11 +1,12 @@
 package org.example.domain.order.item
 
 import jakarta.persistence.*
+import org.example.domain.Base
 import org.example.domain.order.Order
 
 @Entity
 @Table(name = "order-items")
-class OrderItem {
+class OrderItem : Base() {
 
     @ManyToOne
     lateinit var order: Order

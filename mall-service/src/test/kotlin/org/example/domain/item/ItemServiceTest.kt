@@ -1,8 +1,8 @@
 package org.example.domain.item
 
 import jakarta.persistence.EntityNotFoundException
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Order
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired

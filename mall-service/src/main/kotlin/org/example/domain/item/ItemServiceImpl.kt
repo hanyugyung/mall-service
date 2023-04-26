@@ -1,22 +1,20 @@
 package org.example.domain.item
 
 import jakarta.persistence.EntityNotFoundException
-import org.example.infrastructure.item.ItemRepository
-import org.example.infrastructure.partner.PartnerRepository
+import org.example.domain.partner.PartnerRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ItemServiceImpl @Autowired constructor(
-    private val itemRepository: ItemRepository
-    , private val partnerRepository: PartnerRepository
+    private val itemRepository: ItemRepository, private val partnerRepository: PartnerRepository
 ) : ItemService {
 
     @Transactional
     override fun registerItem(dto: ItemCommand.RegisterItem, partnerId: Long): String {
         val item = dto.toEntity(partnerId)
-        return itemRepository.save(item).itemToken
+        return itemRepository.save(item)
     }
 
     @Transactional(readOnly = true)
@@ -28,7 +26,8 @@ class ItemServiceImpl @Autowired constructor(
 
     @Transactional(readOnly = true)
     override fun getListOfItemsToUser(partnerToken: String): List<ItemInfo.GetListOfItem> {
-        val partner = partnerRepository.findByPartnerToken(partnerToken) ?: throw EntityNotFoundException("파트너가 존재하지 않습니다.")
+        val partner =
+            partnerRepository.findByPartnerToken(partnerToken) ?: throw EntityNotFoundException("파트너가 존재하지 않습니다.")
         return getListOfItems(partner.id!!)
     }
 }
