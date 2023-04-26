@@ -3,6 +3,8 @@ package org.example.infrastructure.partner
 import org.example.domain.partner.Partner
 import org.springframework.data.jpa.repository.JpaRepository
 
-interface PartnerRepository : JpaRepository<Partner, Long> {
+interface PartnerJpaRepository : JpaRepository<Partner, Long> {
     fun findByPartnerToken(partnerToken: String): Partner?
+
+    fun findByStatus(status: Partner.Status): List<Partner>
 }

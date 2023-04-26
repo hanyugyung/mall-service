@@ -12,6 +12,8 @@ class Order() : Base() {
 
     lateinit var itemToken: String private set
 
+    var itemId: Long? = null
+
     val userId: Long? = null
 
     @Enumerated(EnumType.STRING)
@@ -22,7 +24,6 @@ class Order() : Base() {
         PAYED, PREPARING, DELIVERING, COMPLETE
     }
 
-//    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.PERSIST])
     @OneToOne
     lateinit var orderAddress: OrderAddress
 
