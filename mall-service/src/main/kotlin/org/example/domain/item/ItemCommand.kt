@@ -5,11 +5,10 @@ import org.example.domain.item.option.ItemOption
 
 class ItemCommand {
 
-    @Getter
     class RegisterItem(
         private val name: String
         , private val price: Int
-        , val itemOptionDtoList: List<RegisterItemOption>
+        , private val itemOptionDtoList: List<RegisterItemOption>
     ) {
         fun toEntity(partnerId: Long): Item {
             var item = Item(this.name, this.price, partnerId)

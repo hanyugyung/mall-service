@@ -12,4 +12,8 @@ class UserRepositoryImpl @Autowired constructor(
     override fun save(user: User): User {
         return userRepository.save(user)
     }
+
+    override fun findByUserToken(userToken: String): User? {
+        return userRepository.findByUserToken(userToken)
+    }
 }
