@@ -3,6 +3,7 @@ package org.example.domain.order
 import jakarta.persistence.*
 import lombok.Getter
 import org.example.domain.Base
+import org.example.domain.item.Item
 import org.example.domain.order.address.OrderAddress
 import org.example.domain.order.item.OrderItem
 
@@ -10,11 +11,11 @@ import org.example.domain.order.item.OrderItem
 @Table(name = "orders")
 class Order() : Base() {
 
-    lateinit var itemToken: String private set
+    lateinit var orderToken: String
 
-    var itemId: Long? = null
+    var totalPrice: Int = 0
 
-    val userId: Long? = null
+    private var userId: Long? = null
 
     @Enumerated(EnumType.STRING)
     var status: Status = Status.PAYED // TODO 결제는 논외
@@ -24,9 +25,19 @@ class Order() : Base() {
         PAYED, PREPARING, DELIVERING, COMPLETE
     }
 
-    @OneToOne
+    @OneToOne(cascade = [CascadeType.MERGE, CascadeType.PERSIST])
     lateinit var orderAddress: OrderAddress
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.PERSIST])
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = [CascadeType.MERGE, CascadeType.PERSIST])
     lateinit var orderItemList: List<OrderItem>
+
+    constructor(userId: Long, orderAddress: OrderAddress): this() {
+        this.orderToken = System.currentTimeMillis().toString()
+        this.userId = userId
+        this.orderAddress = orderAddress
+    }
+
+    fun addOrderItemList(orderItemList: List<OrderItem>) {
+        this.orderItemList = orderItemList
+    }
 }
