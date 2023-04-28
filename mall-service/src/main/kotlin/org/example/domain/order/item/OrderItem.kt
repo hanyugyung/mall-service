@@ -34,4 +34,10 @@ class OrderItem() : Base() {
     fun addOrderItemOptionList(orderItemOptionList: List<OrderItemOption>) {
         this.orderItemOptionList = orderItemOptionList
     }
+
+    fun calculatePrice(): Int {
+        if(orderItemOptionList.isEmpty()) throw IllegalStateException("가격을 계산할 수 없습니다.")
+        return orderItemOptionList.fold(0){
+                total, it -> total + (this.price + it.extraPrice) * it.count }
+    }
 }

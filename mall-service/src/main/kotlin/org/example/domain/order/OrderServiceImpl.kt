@@ -32,6 +32,9 @@ class OrderServiceImpl constructor(
                 orderItem
             }.toList()
         )
+
+        // TODO 주문 후 재고 파악 후 저장
+
         return orderRepository.save(order)
     }
 

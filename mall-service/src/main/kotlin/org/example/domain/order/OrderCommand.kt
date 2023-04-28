@@ -51,13 +51,14 @@ class OrderCommand {
     }
 
     class RegisterOrderItemOption(
-        private val extraPrice: Int = 0, private val optionName: String
+        private val extraPrice: Int = 0, private val optionName: String, private val count: Int
     ) {
         fun toEntity(orderItem: OrderItem): OrderItemOption {
             return OrderItemOption(
                 orderItem = orderItem
                 , extraPrice = this.extraPrice
                 , optionName = this.optionName
+                , count = this.count
             )
         }
     }

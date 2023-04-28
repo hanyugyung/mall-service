@@ -16,4 +16,8 @@ class UserRepositoryImpl @Autowired constructor(
     override fun findByUserToken(userToken: String): User? {
         return userRepository.findByUserToken(userToken)
     }
+
+    override fun findByEmail(email: String): User? {
+        return userRepository.findByEmail(email)
+    }
 }

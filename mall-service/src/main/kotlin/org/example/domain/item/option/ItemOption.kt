@@ -24,4 +24,10 @@ class ItemOption() : Base() {
         this.optionName = optionName
         this.item = item
     }
+
+    fun sell(count: Int) {
+        if(this.stock - count < 0) throw IllegalArgumentException("재고가 부족합니다!")
+        this.stock -= count
+    }
+
 }

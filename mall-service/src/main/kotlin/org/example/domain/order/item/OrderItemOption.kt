@@ -17,9 +17,12 @@ class OrderItemOption() : Base() {
 
     lateinit var optionName: String
 
-    constructor(orderItem: OrderItem, extraPrice: Int, optionName: String): this() {
-        this.orderItem
+    var count: Int = 0
+
+    constructor(orderItem: OrderItem, extraPrice: Int, optionName: String, count: Int): this() {
+        this.orderItem = orderItem
         this.extraPrice = extraPrice
         this.optionName = optionName
+        this.count = count
     }
 }
