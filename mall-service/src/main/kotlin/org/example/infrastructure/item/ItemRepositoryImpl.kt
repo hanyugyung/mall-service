@@ -16,4 +16,8 @@ class ItemRepositoryImpl constructor(
     override fun findAllByPartnerId(partnerId: Long): List<Item> {
         return itemRepository.findAllByPartnerId(partnerId)
     }
+
+    override fun findByItemToken(itemToken: String): Item? {
+        return itemRepository.findByItemToken(itemToken)
+    }
 }

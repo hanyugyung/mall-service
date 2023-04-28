@@ -39,5 +39,12 @@ class Order() : Base() {
 
     fun addOrderItemList(orderItemList: List<OrderItem>) {
         this.orderItemList = orderItemList
+        calculateTotalPrice()
+    }
+
+    private fun calculateTotalPrice() {
+        if(orderItemList.isEmpty()) throw IllegalStateException("가격을 계산할 수 없습니다.")
+        this.totalPrice = orderItemList.fold(0) {
+                total, it -> total + it.calculatePrice() }
     }
 }
