@@ -9,11 +9,11 @@ import org.springframework.stereotype.Repository
 class UserRepositoryImpl @Autowired constructor(
     private val userRepository: UserJpaRepository
 ): UserRepository {
-    override fun save(user: User): User {
-        return userRepository.save(user)
+    override fun store(user: User) {
+        userRepository.save(user)
     }
 
-    override fun findByUserToken(userToken: String): User? {
+    override fun findBy(userToken: String): User? {
         return userRepository.findByUserToken(userToken)
     }
 

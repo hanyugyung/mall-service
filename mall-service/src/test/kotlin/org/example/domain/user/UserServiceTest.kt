@@ -19,6 +19,6 @@ internal class UserServiceTest @Autowired constructor(
 
         val user = userService.signUpUser(UserCommand.SignUpUser(email, password))
 
-        assertNotNull(user.id)
+        assertNotNull(user.userToken)
     }
 }
