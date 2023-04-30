@@ -12,12 +12,13 @@ class PartnerServiceImpl @Autowired constructor(
     @Transactional
     override fun registerPartner(dto: PartnerCommand.RegisterPartner): String {
         val partner = dto.toEntity()
-        return partnerRepository.save(partner)
+        partnerRepository.store(partner)
+        return partner.partnerToken
     }
 
     @Transactional(readOnly = true)
     override fun getPartnerBrandInfo(): List<PartnerInfo.GetPartnerBrandInfo> {
-        return partnerRepository.findAllByStatus(Partner.Status.ACTIVE)
+        return partnerRepository.findAllBy(Partner.Status.ACTIVE)
             .map { PartnerInfo.GetPartnerBrandInfo(it.partnerToken, it.brandName) }
     }
 }

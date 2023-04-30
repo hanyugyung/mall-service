@@ -1,8 +1,8 @@
 package org.example.domain.item
 
 interface ItemRepository {
-    fun save(item: Item): String
-    fun findAllByPartnerId(partnerId: Long): List<Item>
+    fun store(item: Item)
+    fun findAllBy(partnerId: Long): List<Item>
 
-    fun findByItemToken(itemToken: String): Item?
+    fun findBy(itemToken: String): Item?
 }

@@ -7,10 +7,7 @@ import org.example.domain.partner.Partner
 import org.example.domain.partner.PartnerCommand
 import org.example.domain.partner.PartnerRepository
 import org.example.domain.partner.PartnerService
-import org.example.domain.user.User
-import org.example.domain.user.UserCommand
-import org.example.domain.user.UserRepository
-import org.example.domain.user.UserService
+import org.example.domain.user.*
 import org.example.infrastructure.item.ItemJpaRepository
 import org.example.infrastructure.order.OrderJpaRepository
 import org.example.infrastructure.partner.PartnerJpaRepository
@@ -33,7 +30,7 @@ internal class OrderServiceTest @Autowired constructor(
     , val orderRepository: OrderJpaRepository
 ) {
 
-    lateinit var user: User
+    lateinit var user: UserInfo.SignUpUser
     lateinit var partner: Partner
     lateinit var item: Item
 

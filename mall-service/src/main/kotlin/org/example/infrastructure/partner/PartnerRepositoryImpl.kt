@@ -9,15 +9,15 @@ import org.springframework.stereotype.Repository
 class PartnerRepositoryImpl @Autowired constructor(
     private val partnerRepository: PartnerJpaRepository
 ) : PartnerRepository {
-    override fun save(partner: Partner): String {
-        return partnerRepository.save(partner).partnerToken
+    override fun store(partner: Partner) {
+        partnerRepository.save(partner)
     }
 
-    override fun findByPartnerToken(partnerToken: String): Partner? {
+    override fun findBy(partnerToken: String): Partner? {
         return partnerRepository.findByPartnerToken(partnerToken)
     }
 
-    override fun findAllByStatus(status: Partner.Status): List<Partner> {
+    override fun findAllBy(status: Partner.Status): List<Partner> {
         return partnerRepository.findByStatus(status)
     }
 }

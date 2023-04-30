@@ -9,8 +9,8 @@ class OrderRepositoryImpl constructor(
     val orderRepository: OrderJpaRepository
 ): OrderRepository{
 
-    override fun save(order: Order): String {
-        return orderRepository.save(order).orderToken
+    override fun store(order: Order) {
+        orderRepository.save(order)
     }
 
 }

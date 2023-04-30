@@ -16,13 +16,13 @@ class OrderServiceImpl constructor(
     @Transactional
     override fun registerOrder(dto: OrderCommand.RegisterOrder, userToken: String): String {
 
-        val user = userRepository.findByUserToken(userToken) ?: throw EntityNotFoundException("잘못된 사용자입니다.")
+        val user = userRepository.findBy(userToken) ?: throw EntityNotFoundException("잘못된 사용자입니다.")
 
         // TODO 재고 파악
         val order = dto.toEntity(user.id!!)
         order.addOrderItemList(
             dto.orderItemDtoList.map {
-                val item = itemRepository.findByItemToken(it.itemToken)
+                val item = itemRepository.findBy(it.itemToken)
                     ?: throw EntityNotFoundException("존재하지 않는 상품입니다.")
 
                 val orderItem = it.toEntity(order, item)
@@ -34,8 +34,9 @@ class OrderServiceImpl constructor(
         )
 
         // TODO 주문 후 재고 파악 후 저장
+        orderRepository.store(order)
 
-        return orderRepository.save(order)
+        return order.orderToken
     }
 
     @Transactional(readOnly = true)

@@ -1,7 +1,7 @@
 package org.example.domain.partner
 
 interface PartnerRepository {
-    fun save(partner: Partner): String
-    fun findByPartnerToken(partnerToken: String): Partner?
-    fun findAllByStatus(status: Partner.Status) : List<Partner>
+    fun store(partner: Partner)
+    fun findBy(partnerToken: String): Partner?
+    fun findAllBy(status: Partner.Status) : List<Partner>
 }

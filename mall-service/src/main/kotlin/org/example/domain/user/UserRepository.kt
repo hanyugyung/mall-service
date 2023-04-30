@@ -1,9 +1,9 @@
 package org.example.domain.user
 
 interface UserRepository {
-    fun save(user: User): User
+    fun store(user: User)
 
-    fun findByUserToken(userToken: String): User?
+    fun findBy(userToken: String): User?
 
     fun findByEmail(email: String): User?
 }

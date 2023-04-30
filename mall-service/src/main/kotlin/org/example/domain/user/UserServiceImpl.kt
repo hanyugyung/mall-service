@@ -10,11 +10,12 @@ class UserServiceImpl @Autowired constructor(
 ) : UserService {
 
     @Transactional
-    override fun signUpUser(dto: UserCommand.SignUpUser) : User {
+    override fun signUpUser(dto: UserCommand.SignUpUser) : UserInfo.SignUpUser {
 
         // TODO email 중복 검사
 
         val user = dto.toEntity() // TODO password 암호화
-        return userRepository.save(user)
+        userRepository.store(user)
+        return UserInfo.SignUpUser.of(user)
     }
 }
