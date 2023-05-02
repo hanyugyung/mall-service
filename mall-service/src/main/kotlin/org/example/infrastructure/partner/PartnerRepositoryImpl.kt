@@ -20,4 +20,8 @@ class PartnerRepositoryImpl @Autowired constructor(
     override fun findAllBy(status: Partner.Status): List<Partner> {
         return partnerRepository.findByStatus(status)
     }
+
+    override fun findByEmail(email: String): Partner? {
+        return partnerRepository.findByEmail(email)
+    }
 }

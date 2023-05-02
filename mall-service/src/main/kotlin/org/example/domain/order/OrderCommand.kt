@@ -1,6 +1,7 @@
 package org.example.domain.order
 
 import org.example.domain.item.Item
+import org.example.domain.item.option.ItemOption
 import org.example.domain.order.address.OrderAddress
 import org.example.domain.order.item.OrderItem
 import org.example.domain.order.item.OrderItemOption
@@ -51,7 +52,10 @@ class OrderCommand {
     }
 
     class RegisterOrderItemOption(
-        private val extraPrice: Int = 0, private val optionName: String, private val count: Int
+        private val extraPrice: Int = 0
+        , private val optionName: String
+        , val count: Int
+        , val itemOptionToken: String
     ) {
         fun toEntity(orderItem: OrderItem): OrderItemOption {
             return OrderItemOption(

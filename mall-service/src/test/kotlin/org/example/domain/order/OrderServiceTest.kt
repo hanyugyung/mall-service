@@ -18,6 +18,8 @@ import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.transaction.annotation.Transactional
+import java.util.*
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest
@@ -36,7 +38,7 @@ internal class OrderServiceTest @Autowired constructor(
 
     @BeforeAll
     fun setup() {
-        var email = "test@test.com"
+        var email = UUID.randomUUID().toString().substring(0,5) + "test@test.com"
         var password = "password1234"
 
         user = userService.signUpUser(UserCommand.SignUpUser(email, password))
@@ -53,8 +55,12 @@ internal class OrderServiceTest @Autowired constructor(
 
     }
 
+    @Transactional
     @Test
     fun 주문하기() {
+
+        val initStock = item.itemOptionList[0].stock
+
         val dto = OrderCommand.RegisterOrder(
             address1 = "xx시 xx구 xx동"
             , address2 = "xx호"
@@ -68,7 +74,10 @@ internal class OrderServiceTest @Autowired constructor(
                     , itemToken = item.itemToken
                     , itemName = item.name
                     , orderItemOptionDtoList = listOf(OrderCommand.RegisterOrderItemOption(
-                            extraPrice = 1000, optionName = "청바지S", count = 1
+                            extraPrice = item.itemOptionList[0].extraPrice
+                        , optionName = item.itemOptionList[0].optionName
+                        , count = 1
+                        , item.itemOptionList[0].itemOptionToken
                         )
                     )
                 )
@@ -76,7 +85,11 @@ internal class OrderServiceTest @Autowired constructor(
         )
 
         val order = orderRepository.findByOrderToken(orderService.registerOrder(dto, user.userToken))
+        item = itemRepository.findByItemToken(item.itemToken)!!
 
         assertEquals(order!!.totalPrice, 11000)
+
+
+        assertEquals(item.itemOptionList[0].stock, initStock - 1)
     }
 }

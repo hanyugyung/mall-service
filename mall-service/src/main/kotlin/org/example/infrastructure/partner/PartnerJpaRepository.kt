@@ -7,4 +7,5 @@ interface PartnerJpaRepository : JpaRepository<Partner, Long> {
     fun findByPartnerToken(partnerToken: String): Partner?
 
     fun findByStatus(status: Partner.Status): List<Partner>
+    fun findByEmail(email: String): Partner?
 }
