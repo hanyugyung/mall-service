@@ -18,7 +18,6 @@ class OrderServiceImpl constructor(
 
         val user = userRepository.findBy(userToken) ?: throw EntityNotFoundException("잘못된 사용자입니다.")
 
-        // TODO 재고 파악
         val order = dto.toEntity(user.id!!)
         order.addOrderItemList(
             dto.orderItemDtoList.map {
@@ -27,7 +26,12 @@ class OrderServiceImpl constructor(
 
                 val orderItem = it.toEntity(order, item)
                 orderItem.addOrderItemOptionList(
-                    it.orderItemOptionDtoList.map { dto -> dto.toEntity(orderItem) }.toList()
+                    it.orderItemOptionDtoList.map { rgstrOIO ->
+                        val itemOption =
+                            item.itemOptionList.first { io -> io.itemOptionToken == rgstrOIO.itemOptionToken }
+                        itemOption.sell(rgstrOIO.count)
+                        rgstrOIO.toEntity(orderItem)
+                    }.toList()
                 )
                 orderItem
             }.toList()

@@ -9,12 +9,14 @@ class UserServiceImpl @Autowired constructor(
     private val userRepository: UserRepository
 ) : UserService {
 
+    private fun existEmailAlready(email: String) {
+        if(userRepository.findByEmail(email) != null) throw IllegalArgumentException("이미 존재하는 이메일 입니다.")
+    }
+
     @Transactional
     override fun signUpUser(dto: UserCommand.SignUpUser) : UserInfo.SignUpUser {
-
-        // TODO email 중복 검사
-
-        val user = dto.toEntity() // TODO password 암호화
+        existEmailAlready(dto.email)
+        val user = dto.toEntity()
         userRepository.store(user)
         return UserInfo.SignUpUser.of(user)
     }

@@ -9,8 +9,13 @@ class PartnerServiceImpl @Autowired constructor(
     private val partnerRepository: PartnerRepository
 ) : PartnerService {
 
+    private fun existEmailAlready(email: String) {
+        if(partnerRepository.findByEmail(email) != null) throw IllegalArgumentException("이미 존재하는 파트너 입니다.")
+    }
+
     @Transactional
     override fun registerPartner(dto: PartnerCommand.RegisterPartner): String {
+        existEmailAlready(dto.email)
         val partner = dto.toEntity()
         partnerRepository.store(partner)
         return partner.partnerToken

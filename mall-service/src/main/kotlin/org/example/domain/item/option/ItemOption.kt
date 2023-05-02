@@ -11,6 +11,7 @@ import org.example.domain.item.Item
 @Table(name = "item-options")
 @NoArgsConstructor
 class ItemOption() : Base() {
+    lateinit var itemOptionToken: String private set
     var stock: Int = 0
     var extraPrice: Int = 0
     lateinit var optionName: String
@@ -19,6 +20,7 @@ class ItemOption() : Base() {
     lateinit var item: Item
 
     constructor(stock: Int, extraPrice: Int, optionName: String, item: Item) : this() {
+        this.itemOptionToken = System.currentTimeMillis().toString()
         this.stock = stock
         this.extraPrice = extraPrice
         this.optionName = optionName

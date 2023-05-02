@@ -3,7 +3,7 @@ package org.example.domain.user
 class UserCommand {
 
     class SignUpUser(
-        private val email: String
+        val email: String
         , private val password: String
     ) {
         fun toEntity(): User {
