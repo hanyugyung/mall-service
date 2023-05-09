@@ -37,7 +37,6 @@ class OrderServiceImpl constructor(
             }.toList()
         )
 
-        // TODO 주문 후 재고 파악 후 저장
         orderRepository.store(order)
 
         return order.orderToken
