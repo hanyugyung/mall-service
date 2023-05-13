@@ -4,17 +4,17 @@ import org.springframework.http.HttpStatus
 
 class CommonResponse<T>(
     val result: ResultStatus
-    , var data: T? = null
     , val status: HttpStatus
+    , var data: T? = null
 ) {
 
     companion object {
-        fun <T> of(result: ResultStatus, data: T, status: HttpStatus): CommonResponse<T> {
-            return CommonResponse(result, data, status)
+        fun <T> of(result: ResultStatus, status: HttpStatus, data: T): CommonResponse<T> {
+            return CommonResponse(result, status, data)
         }
 
         fun of(result: ResultStatus, status: HttpStatus): CommonResponse<*> {
-            return CommonResponse(result, null, status)
+            return CommonResponse(result, status, null)
         }
     }
 
