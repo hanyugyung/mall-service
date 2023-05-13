@@ -12,16 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/users")
-class UserController @Autowired constructor(
+class UserApiController @Autowired constructor(
     private val userService: UserService
 ) {
 
     @PostMapping("/sign-up")
-    fun signUpUser(@RequestBody @Valid requestDto: UserApiDto.SignUpUser): CommonResponse<*> {
-        return CommonResponse.of(
-            CommonResponse.ResultStatus.SUCCESS
-            , HttpStatus.OK
-            , userService.signUpUser(requestDto.toDomainDto())
+    fun signUpUser(@RequestBody @Valid requestDto: UserApiDto.SignUpUserRequest): CommonResponse<UserApiDto.SignUpUserResponse> {
+        return CommonResponse.successOf(UserApiDto.SignUpUserResponse.of(
+                userService.signUpUser(requestDto.toDomainDto())
+            )
         )
     }
 

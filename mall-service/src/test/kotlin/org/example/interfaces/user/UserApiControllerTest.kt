@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
-internal class UserControllerTest {
+internal class UserApiControllerTest {
 
     val urlPrefix = "/api/users"
 
