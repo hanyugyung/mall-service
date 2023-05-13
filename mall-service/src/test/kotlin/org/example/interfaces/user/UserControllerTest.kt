@@ -1,4 +1,4 @@
-package org.example.interfaces.partner
+package org.example.interfaces.user
 
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -7,43 +7,43 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.transaction.annotation.Transactional
 
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
-internal class PartnerControllerTest {
+internal class UserControllerTest {
 
-    val urlPrefix = "/api/partners"
+    val urlPrefix = "/api/users"
 
     @Autowired
     private lateinit var mockMvc: MockMvc
 
     @Test
     @Transactional
-    fun 파트너_등록_요청() {
+    fun 사용자_회원가입() {
 
         // given
         val requestDtoStr = """
             {
-                "email" : "test_partner@test.com"
+                "email" : "test_user@test.com"
                 , "password" : "pass1234!@#"
-                , "bizNo" : "111-11-11111"
-                , "brandName" : "test브랜드"
             }
         """
 
         // when, then
         mockMvc
             .perform(
-                post("$urlPrefix/register")
+                MockMvcRequestBuilders.post("$urlPrefix/sign-up")
                     .content(requestDtoStr)
                     .contentType(MediaType.APPLICATION_JSON)
             )
-            .andExpect(status().isOk)
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andExpect(MockMvcResultMatchers.jsonPath("$.result").exists())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.status").exists())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.data.email").exists())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.data.userToken").exists())
     }
-
-
 }
