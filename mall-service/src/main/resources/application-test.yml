@@ -18,6 +18,6 @@ spring:
           in_clause_parameter_padding: true # in 절에서 제곱단위로 쿼리생성
     hibernate:
       use-new-id-generator-mappings: false
-      ddl-auto: create
+      ddl-auto: update
 #      naming:
 #        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
