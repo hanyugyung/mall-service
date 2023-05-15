@@ -7,7 +7,7 @@ interface AuthService {
     fun validateAccount(email: String, password: String, role: UseRole): TokenDto
 
     @Transactional(readOnly = true)
-    fun issueToken(email: String, password: String, role: UseRole): String {
+    private fun issueToken(email: String, password: String, role: UseRole): String {
         /**
          * 1. 사용자, 암호 확인
          * 2. jwt 토큰 발급
