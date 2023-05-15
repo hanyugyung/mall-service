@@ -1,5 +1,7 @@
 package org.example.domain.partner
 
+import org.example.domain.auth.AuthCommand
+
 class PartnerCommand {
 
     class RegisterPartner(

@@ -1,5 +1,7 @@
 package org.example.interfaces.user
 
+import org.example.domain.user.UserCommand
+import org.example.domain.user.UserService
 import org.example.interfaces.CommonResponse
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,6 +23,13 @@ internal class UserApiControllerTest {
 
     @Autowired
     private lateinit var mockMvc: MockMvc
+
+    @Autowired
+    private lateinit var userService: UserService
+
+    private fun signUpUser(email: String, password: String) {
+        val user = userService.signUpUser(UserCommand.SignUpUser(email, password))
+    }
 
     @Test
     @Transactional
@@ -87,5 +96,32 @@ internal class UserApiControllerTest {
             .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("이미 존재하는 이메일 입니다."))
             .andExpect(MockMvcResultMatchers.jsonPath("$.data").doesNotExist())
 
+    }
+
+    @Test
+    @Transactional
+    fun 사용자_로그인_요청() {
+
+        // given
+        val email = "test_login_user@test.com"
+        val password = "password1234!@#$"
+        signUpUser(email = email, password = password)
+
+        val requestDtoStr = """
+            {
+                "email" : "$email"
+                , "password" : "$password"
+            }
+        """
+
+        // when, then
+        mockMvc
+            .perform(
+                MockMvcRequestBuilders.post("$urlPrefix/login")
+                    .content(requestDtoStr)
+                    .contentType(MediaType.APPLICATION_JSON)
+            )
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andExpect(MockMvcResultMatchers.jsonPath("$.data.token").exists())
     }
 }
