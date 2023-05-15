@@ -1,5 +1,7 @@
 package org.example.domain.user
 
+import org.example.domain.auth.AuthCommand
+
 class UserCommand {
 
     class SignUpUser(

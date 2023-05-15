@@ -4,10 +4,11 @@ class AuthInfo {
 
     class Login(
         val token: String
+        , val role: UseRole
     ) {
         companion object{
-            fun of(token: String): Login{
-                return Login(token)
+            fun of(tokenDto: TokenDto.TokenInfo): Login{
+                return Login(tokenDto.token, tokenDto.role)
             }
         }
     }
