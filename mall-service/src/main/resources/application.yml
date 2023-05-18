@@ -11,3 +11,9 @@ spring:
         persistence:
           sharedCache:
             mode: ALL
+
+auth:
+  token:
+    expire-ms: 600000
+    issuer: mall
+    secret-key: sdknflk23@#%SDFknaosif$^#^!
