@@ -7,4 +7,5 @@ class JwtProperty(
     val expireMs: Long
     , val issuer: String
     , val secretKey: String
+    , val header: String
 )

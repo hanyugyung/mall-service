@@ -17,3 +17,4 @@ auth:
     expire-ms: 600000
     issuer: mall
     secret-key: sdknflk23@#%SDFknaosif$^#^!
+    header: mall-token
