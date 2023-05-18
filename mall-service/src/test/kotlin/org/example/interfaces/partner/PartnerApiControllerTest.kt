@@ -25,6 +25,8 @@ internal class PartnerApiControllerTest {
     @Transactional
     fun 파트너_등록_요청() {
 
+        // TODO 인증 테스트단에서 어떻게 할지 고민 필요~
+
         // given
         val requestDtoStr = """
             {

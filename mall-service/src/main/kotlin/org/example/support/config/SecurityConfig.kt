@@ -2,7 +2,10 @@ package org.example.support.config
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.example.domain.auth.JwtAuthFilter
+import org.example.domain.auth.JwtProperty
 import org.example.interfaces.CommonResponse
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpStatus
@@ -23,6 +26,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 class SecurityConfig {
 
+    @Autowired
+    private lateinit var jwtProperty: JwtProperty
+
     @Bean
     fun passwordEncoder(): PasswordEncoder? {
         return BCryptPasswordEncoder()
@@ -36,7 +42,8 @@ class SecurityConfig {
                 "/api-docs",
                 "/swagger-ui/**",
                 "/favicon.ico",
-                "/api/**"
+                "/api/*/login",
+                "/api/users/sign-up"
             )
         }
     }
@@ -54,8 +61,8 @@ class SecurityConfig {
             .and()
             .authorizeHttpRequests().anyRequest().permitAll()
             .and()
-//          TODO auth filter 구현
-//            .addFilterBefore(authFilter(), UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterBefore(JwtAuthFilter(jwtProperty.header, jwtProperty.secretKey)
+                , UsernamePasswordAuthenticationFilter::class.java)
             .exceptionHandling()
             .authenticationEntryPoint { request: HttpServletRequest?, response: HttpServletResponse, authException: AuthenticationException? ->
                 response.status = HttpStatus.UNAUTHORIZED.value()

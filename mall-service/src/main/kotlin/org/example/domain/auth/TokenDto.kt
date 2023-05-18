@@ -23,7 +23,7 @@ class TokenDto {
         fun generateToken(jwtProperty: JwtProperty): String {
 
             val iat = Date()
-            val exp = Date(iat.time + jwtProperty.expireMs.toLong()) // TODO exp, issuer, secretkey 설정파일에서 가져오도록 수정
+            val exp = Date(iat.time + jwtProperty.expireMs)
 
             val claims = mutableMapOf<String, Any>()
             claims["email"] = this.email
