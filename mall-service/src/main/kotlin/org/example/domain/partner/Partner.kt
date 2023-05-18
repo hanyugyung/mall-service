@@ -28,7 +28,6 @@ class Partner() : Base() {
         ACTIVE, INACTIVE
     }
 
-    @Builder
     constructor(email: String, password: String, bizNo: String, brandName: String) : this() {
         this.partnerToken = System.currentTimeMillis().toString()
         this.email = email

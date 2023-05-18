@@ -12,6 +12,7 @@ class AuthServiceImpl @Autowired constructor(
     private val userRepository: UserRepository
     , private val partnerRepository: PartnerRepository
     , private val passwordEncoder: PasswordEncoder
+    , private val jwtProperty: JwtProperty
 ) : AuthService {
 
     private fun validatePassword(password: String, passwordHash: String): Boolean {
@@ -44,6 +45,6 @@ class AuthServiceImpl @Autowired constructor(
          * 2. jwt 토큰 발급
          */
         val payload = validateAccount(email, password, role)
-        return TokenDto.TokenInfo.of(payload)
+        return TokenDto.TokenInfo.of(payload, jwtProperty)
     }
 }
