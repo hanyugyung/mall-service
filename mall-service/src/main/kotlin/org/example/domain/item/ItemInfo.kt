@@ -1,33 +1,35 @@
 package org.example.domain.item
 
-import lombok.Builder
-
 class ItemInfo {
 
     class GetListOfItem(
-        private val itemToken: String
-        , private val name: String
-        , private val price: Int
-        , val itemOptionDtoList: List<GetListOfItemOption>
+        val itemToken: String
+        , val name: String
+        , val price: Int
     ) {
         companion object {
-            fun of(item: Item) : GetListOfItem {
+            fun of(item: Item): GetListOfItem {
                 return GetListOfItem(
-                    itemToken = item.itemToken
-                    , name = item.name
-                    , price = item.price
-                    , itemOptionDtoList = item.itemOptionList
-                        .map { GetListOfItemOption(it.stock, it.optionName, it.extraPrice) }
+                    itemToken = item.itemToken, name = item.name, price = item.price
                 )
             }
         }
     }
 
     class GetListOfItemOption(
-        private val stock: Int
-        , private val optionName: String
-        , private val extraPrice: Int
+        val stock: Int
+        , val optionName: String
+        , val extraPrice: Int
     ) {
+        companion object {
+            fun optionListOf(item: Item): List<GetListOfItemOption> {
+                return item.itemOptionList.map {
+                    GetListOfItemOption(
+                        stock = it.stock, optionName = it.optionName, extraPrice = it.extraPrice
+                    )
+                }
+            }
+        }
     }
 
 }

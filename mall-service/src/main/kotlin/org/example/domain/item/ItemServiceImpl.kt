@@ -19,16 +19,17 @@ class ItemServiceImpl @Autowired constructor(
     }
 
     @Transactional(readOnly = true)
-    override fun getListOfItems(partnerId: Long): List<ItemInfo.GetListOfItem> {
-        return itemRepository.findAllBy(partnerId)
+    override fun getListOfItems(partnerToken: String): List<ItemInfo.GetListOfItem> {
+        val partner =
+            partnerRepository.findBy(partnerToken) ?: throw EntityNotFoundException("파트너가 존재하지 않습니다.")
+        return itemRepository.findAllBy(partner.id!!)
             .map { ItemInfo.GetListOfItem.of(it) }
             .toList()
     }
 
     @Transactional(readOnly = true)
-    override fun getListOfItemsToUser(partnerToken: String): List<ItemInfo.GetListOfItem> {
-        val partner =
-            partnerRepository.findBy(partnerToken) ?: throw EntityNotFoundException("파트너가 존재하지 않습니다.")
-        return getListOfItems(partner.id!!)
+    override fun getItemOption(itemToken: String): List<ItemInfo.GetListOfItemOption> {
+        val item = itemRepository.findBy(itemToken) ?: throw EntityNotFoundException("존재하지 않는 상품입니다.")
+        return ItemInfo.GetListOfItemOption.optionListOf(item)
     }
 }
