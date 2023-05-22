@@ -51,7 +51,7 @@ internal class OrderServiceTest @Autowired constructor(
         val option2 = ItemCommand.RegisterItemOption(5, 2500, "청바지M")
         val dto = ItemCommand.RegisterItem("상품1", 10000, listOf(option1, option2))
 
-        item = itemRepository.save(dto.toEntity(partner.id!!))
+        item = itemRepository.save(dto.toEntity(partner.partnerToken))
 
     }
 

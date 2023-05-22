@@ -13,8 +13,8 @@ class ItemRepositoryImpl constructor(
         itemRepository.save(item)
     }
 
-    override fun findAllBy(partnerId: Long): List<Item> {
-        return itemRepository.findAllByPartnerId(partnerId)
+    override fun findAllBy(partnerToken: String): List<Item> {
+        return itemRepository.findAllByPartnerToken(partnerToken)
     }
 
     override fun findBy(itemToken: String): Item? {

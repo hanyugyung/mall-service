@@ -24,6 +24,6 @@ class PartnerServiceImpl @Autowired constructor(
     @Transactional(readOnly = true)
     override fun getPartnerBrandInfo(): List<PartnerInfo.GetPartnerBrandInfo> {
         return partnerRepository.findAllBy(Partner.Status.ACTIVE)
-            .map { PartnerInfo.GetPartnerBrandInfo(it.partnerToken, it.brandName) }
+            .map { PartnerInfo.GetPartnerBrandInfo.of(it) }
     }
 }
