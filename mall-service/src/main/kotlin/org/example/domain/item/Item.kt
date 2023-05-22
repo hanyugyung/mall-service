@@ -23,16 +23,16 @@ class Item() : Base() {
         VISIBLE, INVISIBLE
     }
 
-    var partnerId: Long? = null
+    var partnerToken: String? = null
 
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.PERSIST])
     var itemOptionList: List<ItemOption> = listOf()
 
-    constructor(name: String, price: Int, partnerId: Long): this() {
+    constructor(name: String, price: Int, partnerToken: String): this() {
         this.itemToken = System.currentTimeMillis().toString()
         this.name = name
         this.price = price
-        this.partnerId = partnerId
+        this.partnerToken = partnerToken
     }
 
     fun addItemOptionList(itemOptionList: List<ItemOption>) {

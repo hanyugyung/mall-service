@@ -12,8 +12,8 @@ class ItemServiceImpl @Autowired constructor(
 ) : ItemService {
 
     @Transactional
-    override fun registerItem(dto: ItemCommand.RegisterItem, partnerId: Long): String {
-        val item = dto.toEntity(partnerId)
+    override fun registerItem(dto: ItemCommand.RegisterItem, partnerToken: String): String {
+        val item = dto.toEntity(partnerToken)
         itemRepository.store(item)
         return item.itemToken
     }
@@ -22,7 +22,7 @@ class ItemServiceImpl @Autowired constructor(
     override fun getListOfItems(partnerToken: String): List<ItemInfo.GetListOfItem> {
         val partner =
             partnerRepository.findBy(partnerToken) ?: throw EntityNotFoundException("파트너가 존재하지 않습니다.")
-        return itemRepository.findAllBy(partner.id!!)
+        return itemRepository.findAllBy(partner.partnerToken)
             .map { ItemInfo.GetListOfItem.of(it) }
             .toList()
     }

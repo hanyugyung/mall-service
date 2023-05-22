@@ -4,6 +4,7 @@ import org.example.domain.item.ItemService
 import org.example.interfaces.CommonResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -25,8 +26,8 @@ class ItemApiController @Autowired constructor(
                 })
     }
 
-    @GetMapping
-    fun getItemOption(@RequestParam(required = true, name = "item") itemToken: String):
+    @GetMapping("/{item-token}")
+    fun getItemOption(@PathVariable(value="item-token") itemToken: String):
             CommonResponse<List<ItemApiDto.GetListOfItemOptionResponse>> {
 
         return CommonResponse.successOf(

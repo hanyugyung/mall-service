@@ -10,8 +10,8 @@ class ItemCommand {
         , private val price: Int
         , private val itemOptionDtoList: List<RegisterItemOption>
     ) {
-        fun toEntity(partnerId: Long): Item {
-            var item = Item(this.name, this.price, partnerId)
+        fun toEntity(partnerToken: String): Item {
+            var item = Item(this.name, this.price, partnerToken)
             item.addItemOptionList(itemOptionDtoList.map { it.toEntity(item) }.toList())
             return item
         }
