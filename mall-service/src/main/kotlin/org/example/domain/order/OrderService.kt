@@ -4,6 +4,6 @@ interface OrderService {
 
     fun registerOrder(dto: OrderCommand.RegisterOrder, userToken: String): String
 
-    fun getListOfOrdersToUser(userToken: String): List<Order>
+    fun getListOfOrder(userToken: String): List<OrderInfo.GetListOfOrder>
 
 }

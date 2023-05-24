@@ -43,7 +43,7 @@ class OrderServiceImpl constructor(
     }
 
     @Transactional(readOnly = true)
-    override fun getListOfOrdersToUser(userToken: String): List<Order> {
+    override fun getListOfOrder(userToken: String): List<OrderInfo.GetListOfOrder> {
         return listOf()
     }
 }

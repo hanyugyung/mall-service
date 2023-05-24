@@ -19,7 +19,8 @@ class PartnerApiDto {
     }
 
     class LoginPartnerRequest(
-        private val email: String, private val password: String
+        private val email: String
+        , private val password: String
     ) {
         fun toDomainDto(): AuthCommand.LoginPartner {
             return AuthCommand.LoginPartner(this.email, this.password)
