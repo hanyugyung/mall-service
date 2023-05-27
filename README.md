@@ -4,7 +4,7 @@
 ---
 **주요 개발 환경**
 - kotlin
-- Spring Boot 3.0.2
+- Spring Boot 3.0.5
 - Gradle 7.4
 
 -------------------------
@@ -91,6 +91,7 @@
 - application 계층은 다른 aggregate 를 묶어주는 aggregation? 역할을 하는 계층이다.
 - interfaces 는 클라이언트 요청을 받는 영역이다. input, output dto 는 *ApiDto 라는 파일명을 가지고, 중첩클래스 네이밍은 *Request/*Response 를 따른다.
 - PathVariable 은 *token 을로 한다. pk 를 PathVariable 로 받지 않기 위함이다. 왜냐하면 사용자에게 데이터 저장 순서를 노출하지 않기 위함이다.
+- 같은 aggregate 의 엔티티는 id pk 로 참조하고, 다른 aggregate 의 엔티티와는 *token 으로 참조한다.
 
 -------------------------
 **회고**
