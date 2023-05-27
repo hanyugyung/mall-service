@@ -3,11 +3,12 @@ package org.example.interfaces.order
 import org.example.domain.order.Order
 import org.example.domain.order.OrderCommand
 import org.example.domain.order.OrderInfo
+import org.example.domain.order.item.OrderItem
 import java.time.ZonedDateTime
 
 class OrderApiDto {
 
-    class RegisterOrderRequest (
+    class RegisterOrderRequest(
         private val address1: String
         , private val address2: String
         , private val zipCode: String
@@ -75,28 +76,39 @@ class OrderApiDto {
     }
 
     class GetListOfOrderResponse(
-        private val price: Int
-        , val itemToken: String
-        , private val itemName: String
-        , private val extraPrice: Int = 0
-        , private val optionName: String
-        , val count: Int
+        private val totalPrice: Int
         , private val orderToken: String
         , private val orderStatus: Order.Status
         , private val orderCreatedAt: ZonedDateTime
+        , private val orderAddressInfo: OrderInfo.OrderAddressInfo
     ) {
         companion object{
             fun of(domainDto: OrderInfo.GetListOfOrder): GetListOfOrderResponse {
                 return GetListOfOrderResponse(
-                    price = domainDto.price
-                    , itemToken =  domainDto.itemToken
-                    , itemName = domainDto.itemName
-                    , extraPrice = domainDto.extraPrice
-                    , optionName = domainDto.optionName
-                    , count = domainDto.count
+                    totalPrice = domainDto.totalPrice
                     , orderToken = domainDto.orderToken
                     , orderStatus = domainDto.orderStatus
                     , orderCreatedAt = domainDto.orderCreatedAt
+                    , orderAddressInfo = domainDto.orderAddressInfo
+                )
+            }
+        }
+    }
+
+
+    class GetOrderDetailResponse(
+        val itemName: String
+        , val itemToken: String
+        , val itemPrice: Int
+        , val itemOptionList: List<OrderInfo.GetOrderDetailItemOption>
+    ) {
+        companion object {
+            fun of(domainDto: OrderInfo.GetOrderDetail): GetOrderDetailResponse {
+                return GetOrderDetailResponse (
+                    itemName = domainDto.itemName
+                    , itemToken = domainDto.itemToken
+                    , itemPrice = domainDto.itemPrice
+                    , itemOptionList = domainDto.itemOptionList
                 )
             }
         }

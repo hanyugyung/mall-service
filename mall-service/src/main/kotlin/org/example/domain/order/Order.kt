@@ -15,7 +15,7 @@ class Order() : Base() {
 
     var totalPrice: Int = 0
 
-    private var userId: Long? = null
+    var userToken: String? = null
 
     @Enumerated(EnumType.STRING)
     var status: Status = Status.PAYED // TODO 결제는 논외
@@ -31,9 +31,9 @@ class Order() : Base() {
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = [CascadeType.MERGE, CascadeType.PERSIST])
     lateinit var orderItemList: List<OrderItem>
 
-    constructor(userId: Long, orderAddress: OrderAddress): this() {
+    constructor(userToken: String, orderAddress: OrderAddress): this() {
         this.orderToken = System.currentTimeMillis().toString()
-        this.userId = userId
+        this.userToken = userToken
         this.orderAddress = orderAddress
     }
 

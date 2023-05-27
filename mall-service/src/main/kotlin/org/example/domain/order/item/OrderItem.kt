@@ -16,8 +16,6 @@ class OrderItem() : Base() {
 
     lateinit var itemToken: String
 
-    var itemId: Long? = null
-
     lateinit var itemName: String
 
     @OneToMany(mappedBy = "orderItem", fetch = FetchType.LAZY, cascade = [CascadeType.MERGE, CascadeType.PERSIST])
@@ -26,7 +24,6 @@ class OrderItem() : Base() {
     constructor(order: Order, price: Int, item: Item, itemName: String): this() {
         this.order = order
         this.price = price
-        this.itemId = item.id
         this.itemToken = item.itemToken
         this.itemName = itemName
     }

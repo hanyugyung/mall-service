@@ -43,7 +43,9 @@ class SecurityConfig {
                 "/swagger-ui/**",
                 "/favicon.ico",
                 "/api/*/login",
-                "/api/users/sign-up"
+                "/api/users/sign-up",
+                "/h2-console",
+                "/h2-console/**"    // TODO h2 db 접속 왜 안되는지 확인 필요, security ignoring 왜 안되나..
             )
         }
     }

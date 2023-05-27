@@ -24,6 +24,17 @@ class OrderApiController @Autowired constructor(
             })
     }
 
+    @GetMapping("/{order-token}")
+    fun getOrderDetail(@AuthenticationPrincipal requester: Requester
+                       , @PathVariable(value="order-token") orderToken: String):
+            CommonResponse<List<OrderApiDto.GetOrderDetailResponse>> {
+        return CommonResponse.successOf(
+            orderService.getOrderDetail(requester.idToken, orderToken).map {
+                OrderApiDto.GetOrderDetailResponse.of(it)
+            }
+        )
+    }
+
     @PostMapping
     fun registerOrder(@AuthenticationPrincipal requester: Requester
                       , @RequestBody @Valid requestDto: OrderApiDto.RegisterOrderRequest
