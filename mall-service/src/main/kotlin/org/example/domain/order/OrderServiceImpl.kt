@@ -18,7 +18,7 @@ class OrderServiceImpl constructor(
 
         val user = userRepository.findBy(userToken) ?: throw EntityNotFoundException("잘못된 사용자입니다.")
 
-        val order = dto.toEntity(user.id!!)
+        val order = dto.toEntity(user.userToken)
         order.addOrderItemList(
             dto.orderItemDtoList.map {
                 val item = itemRepository.findBy(it.itemToken)
@@ -34,7 +34,7 @@ class OrderServiceImpl constructor(
                     }.toList()
                 )
                 orderItem
-            }.toList()
+            }
         )
 
         orderRepository.store(order)
@@ -43,7 +43,17 @@ class OrderServiceImpl constructor(
     }
 
     @Transactional(readOnly = true)
-    override fun getListOfOrdersToUser(userToken: String): List<Order> {
-        return listOf()
+    override fun getListOfOrder(userToken: String): List<OrderInfo.GetListOfOrder> {
+        return orderRepository.findAllBy(userToken)
+            .map { OrderInfo.GetListOfOrder.of(it) }
+    }
+
+    @Transactional(readOnly = true)
+    override fun getOrderDetail(userToken: String, orderToken: String): List<OrderInfo.GetOrderDetail> {
+
+        val order = orderRepository.findBy(userToken, orderToken)
+            ?: throw EntityNotFoundException("존재하지 않는 주문 이력입니다.")
+
+        return order.orderItemList.map { OrderInfo.GetOrderDetail.of(it) }
     }
 }

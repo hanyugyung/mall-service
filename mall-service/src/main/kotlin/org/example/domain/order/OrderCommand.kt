@@ -17,7 +17,7 @@ class OrderCommand {
         , private val receiveMemo: String
         , val orderItemDtoList: List<RegisterOrderItem>
     ) {
-        fun toEntity(userId: Long): Order {
+        fun toEntity(userToken: String): Order {
 
             val orderAddress = OrderAddress(
                 address1 = this.address1
@@ -29,7 +29,7 @@ class OrderCommand {
             )
 
             return Order(
-                userId = userId
+                userToken = userToken
                 , orderAddress = orderAddress
             )
         }
