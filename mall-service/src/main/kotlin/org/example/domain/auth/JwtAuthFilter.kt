@@ -37,30 +37,34 @@ class JwtAuthFilter(
                                   , filterChain: FilterChain
     ) {
 
-        try {
-            val claims = validateToken(request.getHeader(tokenHeader))
-            val requester = Requester(
-                claims["email"] as String
-                , claims["idToken"] as String
-                , claims["role"] as String
-            )
+        val token: String? = request.getHeader(tokenHeader)
 
-            SecurityContextHolder.getContext().authentication =
-                UsernamePasswordAuthenticationToken(requester, null, requester.authorities)
+        if(token != null) {
+            try {
+                val claims = validateToken(token)
+                val requester = Requester(
+                    claims["email"] as String, claims["idToken"] as String, claims["role"] as String
+                )
 
-        } catch (exception: RuntimeException) {
-            response.status = HttpStatus.UNAUTHORIZED.value()
-            response.contentType = "application/json"
-            ObjectMapper().writeValue(response.outputStream
-                , CommonResponse.successOf(exception, HttpStatus.UNAUTHORIZED))
-        } catch (exception: Exception) {
-            response.status = HttpStatus.INTERNAL_SERVER_ERROR.value()
-            response.contentType = "application/json"
-            ObjectMapper().writeValue(response.outputStream
-                , CommonResponse.failOf(exception))
+                SecurityContextHolder.getContext().authentication =
+                    UsernamePasswordAuthenticationToken(requester, null, requester.authorities)
+
+            } catch (exception: RuntimeException) {
+                response.status = HttpStatus.UNAUTHORIZED.value()
+                response.contentType = "application/json"
+                ObjectMapper().writeValue(
+                    response.outputStream, CommonResponse.successOf(exception, HttpStatus.UNAUTHORIZED)
+                )
+            } catch (exception: Exception) {
+                response.status = HttpStatus.INTERNAL_SERVER_ERROR.value()
+                response.contentType = "application/json"
+                ObjectMapper().writeValue(
+                    response.outputStream, CommonResponse.failOf(exception)
+                )
+            }
         }
 
-
+        filterChain.doFilter(request, response)
     }
 
 }
