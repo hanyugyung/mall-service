@@ -6,6 +6,7 @@ import org.example.domain.auth.JwtAuthFilter
 import org.example.domain.auth.JwtProperty
 import org.example.interfaces.CommonResponse
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpStatus
@@ -34,34 +35,30 @@ class SecurityConfig {
         return BCryptPasswordEncoder()
     }
 
-    @Bean
-    fun configure(): WebSecurityCustomizer? {
-        return WebSecurityCustomizer { web: WebSecurity ->
-            web.ignoring().requestMatchers(
-                "/api-docs/**",
-                "/api-docs",
-                "/swagger-ui/**",
-                "/favicon.ico",
-                "/api/*/login",
-                "/api/users/sign-up",
-                "/h2-console",
-                "/h2-console/**"    // TODO h2 db 접속 왜 안되는지 확인 필요, security ignoring 왜 안되나..
-            )
-        }
-    }
+//    private val permitPath = listOf("/api-docs/**","/api-docs",
+//                "/swagger-ui/**",
+//                "/favicon.ico",
+//                "/api/*/login",
+//                "/api/users/sign-up",
+//                "/h2-console",
+//                "/h2-console/",
+//                "/h2-console/*",
+//                "*/mall-test-db/*",
+//                "/h2-console/**")
 
     @Bean
     @Throws(Exception::class)
     fun filterChain(http: HttpSecurity): SecurityFilterChain? {
         return http.authorizeHttpRequests()
-            .requestMatchers("/api/delivery").hasRole("ROLE_user")
+            .requestMatchers("/api/**").authenticated()
+            .anyRequest().permitAll()
+            .and()
+            .headers().frameOptions().disable()
             .and()
             .httpBasic().disable()
             .formLogin().disable()
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .authorizeHttpRequests().anyRequest().permitAll()
             .and()
             .addFilterBefore(JwtAuthFilter(jwtProperty.header, jwtProperty.secretKey)
                 , UsernamePasswordAuthenticationFilter::class.java)
