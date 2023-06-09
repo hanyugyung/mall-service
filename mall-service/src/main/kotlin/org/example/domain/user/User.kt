@@ -31,4 +31,8 @@ class User() : Base() {
         this.password = password
         this.role = Role.CUSTOMER
     }
+
+    fun encodePassword(passwordHash: String) {
+        this.password = passwordHash
+    }
 }
