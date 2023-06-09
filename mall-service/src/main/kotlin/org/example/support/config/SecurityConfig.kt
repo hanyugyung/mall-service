@@ -50,6 +50,7 @@ class SecurityConfig {
     @Throws(Exception::class)
     fun filterChain(http: HttpSecurity): SecurityFilterChain? {
         return http.authorizeHttpRequests()
+            .requestMatchers("/api/*/login", "/api/users/sign-up").permitAll()
             .requestMatchers("/api/**").authenticated()
             .anyRequest().permitAll()
             .and()

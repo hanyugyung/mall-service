@@ -104,7 +104,7 @@ internal class UserApiControllerTest {
 
         // given
         val email = "test_login_user@test.com"
-        val password = "password1234!@#$"
+        val password = "password1234!@#"
         signUpUser(email = email, password = password)
 
         val requestDtoStr = """

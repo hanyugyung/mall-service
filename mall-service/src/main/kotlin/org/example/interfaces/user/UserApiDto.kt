@@ -36,8 +36,8 @@ class UserApiDto {
 
     @Schema(description = "로그인 요청 API DTO")
     class LoginUserRequest(
-        @Schema(description = "이메일", example = "test@test.com") private val email: String = ""
-        , @Schema(description = "암호", example = "1234") private val password: String = ""
+        @Schema(description = "이메일", example = "test@test.com") val email: String = ""
+        , @Schema(description = "암호", example = "1234") val password: String = ""
     ) {
         fun toDomainDto(): AuthCommand.LoginUser {
             return AuthCommand.LoginUser(this.email, this.password)
