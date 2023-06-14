@@ -3,9 +3,25 @@
 
 ---
 **주요 개발 환경**
+(back-end)
 - kotlin
 - Spring Boot 3.0.5
 - Gradle 7.4
+
+(front-end)
+-
+-
+-
+
+---
+**back-end 서버 테스트 실행방법(windows 기준)**
+- jdk 17 버전 설치되어있다는 가정 하에, cmd 켜서 .jar 파일 경로에서 다음 명령어 실행 [java -jar (jar 파일명).jar]
+- localhost:8080/api-docs : swagger openapi 주소
+- localhost:8080/h2-console : 로컬 내장 디비 주소
+- 처음 api 테스트 시 준비 사항
+  - api/user/sign-up 에서 회원가입 먼저 해야함  
+  - api/*/login 에서 로그인 토큰 발급
+  - swagger openapi 에 토큰 등록? 후 다른 api 테스트 가능!
 
 -------------------------
 
