@@ -3,15 +3,14 @@
 
 ---
 **주요 개발 환경**
+
 (back-end)
 - kotlin
 - Spring Boot 3.0.5
 - Gradle 7.4
 
 (front-end)
--
--
--
+- TODO 여기에 적긔~
 
 ---
 **back-end 서버 테스트 실행방법(windows 기준)**
