@@ -46,5 +46,6 @@ compileTestKotlin {
 }
 
 application {
-    mainClassName = 'MallServiceApplication'
+    //mainClassName = 'MallServiceApplication'
+    mainClass.set("org.example.MallServiceApplicationKt")
 }
